@@ -10,8 +10,8 @@ local mod_shift = mod .. "|SHIFT"
 -- Font and size
 config.font = wezterm.font("JetBrains Mono")
 config.font_size = 13
-config.initial_cols = 122
-config.initial_rows = 30
+config.initial_cols = is_mac and 107 or 122
+config.initial_rows = is_mac and 33 or 30
 config.line_height = 0.9
 config.window_padding = {
   left = 4,
