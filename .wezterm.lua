@@ -10,8 +10,8 @@ local mod_shift = mod .. "|SHIFT"
 -- Font and size
 config.font = wezterm.font("JetBrains Mono")
 config.font_size = 13
-config.initial_cols = 107
-config.initial_rows = 33
+config.initial_cols = 122
+config.initial_rows = 30
 config.line_height = 0.9
 config.window_padding = {
   left = 4,
@@ -21,7 +21,8 @@ config.window_padding = {
 }
 
 -- Minimal appearance
-config.window_background_opacity = 0.92
+config.window_background_opacity = is_mac and 0.92 or 0.95
+
 config.color_scheme = "Builtin Solarized Dark"
 config.colors = {
   background = "#1a1a1a",
@@ -77,15 +78,23 @@ config.scrollback_lines = 10000
 if is_mac then
   config.default_cwd = wezterm.home_dir .. "/Documents/GitHub"
 else
-  config.default_domain = "WSL:Ubuntu"
-  config.default_cwd = "/root/orbina"
+  config.default_domain = "WSL:Ubuntu-22.04"
+  config.wsl_domains = {
+    {
+      name = "WSL:Ubuntu-22.04",
+      distribution = "Ubuntu-22.04",
+      default_cwd = "/root/orbina",
+    },
+  }
 end
 
 -- Keybindings (Cmd on mac, Alt on windows)
 config.keys = {
   -- Split panes
-  { key = "-", mods = mod_shift, action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
-  { key = "=", mods = mod_shift, action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+  { key = "phys:Minus", mods = mod_shift, action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+  { key = "phys:Equal", mods = mod_shift, action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+
+
 
   -- Navigate between panes
   { key = "LeftArrow", mods = mod, action = act.ActivatePaneDirection("Left") },
@@ -119,5 +128,10 @@ config.keys = {
   { key = "8", mods = mod, action = act.ActivateTab(7) },
   { key = "9", mods = mod, action = act.ActivateTab(8) },
 }
+
+-- Windows-only keybindings (Cmd equivalents already exist by default on macOS)
+if not is_mac then
+  table.insert(config.keys, { key = "t", mods = mod, action = act.SpawnCommandInNewTab({ domain = "CurrentPaneDomain", cwd = "/root/orbina" }) })
+end
 
 return config
