@@ -28,7 +28,7 @@ config.colors = {
   background = "#1a1a1a",
   foreground = "#d0d0d0",
 }
-config.hide_tab_bar_if_only_one_tab = true
+config.hide_tab_bar_if_only_one_tab = false
 config.use_fancy_tab_bar = true
 config.tab_bar_at_bottom = false
 config.window_frame = {
@@ -67,8 +67,41 @@ wezterm.on("format-tab-title", function(tab)
   }
 end)
 
+-- Show git branch in the right side of the tab bar
+wezterm.on("update-right-status", function(window, pane)
+  local cwd_uri = pane:get_current_working_dir()
+  if not cwd_uri then
+    window:set_right_status("")
+    return
+  end
+  local cwd = cwd_uri.file_path
+  local success, stdout, stderr = wezterm.run_child_process({
+    "git", "-C", cwd, "rev-parse", "--abbrev-ref", "HEAD",
+  })
+  if success then
+    local branch = stdout:gsub("%s+", "")
+    window:set_right_status(wezterm.format({
+      { Foreground = { Color = "#7aa2f7" } },
+      { Text = "  " .. branch .. "  " },
+    }))
+  else
+    window:set_right_status("")
+  end
+end)
+
 -- Disable kitty keyboard protocol (fixes issues with nvim)
 config.enable_kitty_keyboard = true
+
+-- Bell: audible + visual flash
+config.audible_bell = "SystemBeep"
+config.visual_bell = {
+  fade_in_duration_ms = 150,
+  fade_out_duration_ms = 700,
+  fade_in_function = "EaseIn",
+  fade_out_function = "EaseOut",
+  target = "BackgroundColor",
+}
+config.colors.visual_bell = "#ffffff"
 
 -- Cursor
 config.default_cursor_style = "BlinkingBar"
