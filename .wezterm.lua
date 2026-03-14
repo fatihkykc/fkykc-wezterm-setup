@@ -67,6 +67,9 @@ wezterm.on("format-tab-title", function(tab)
   }
 end)
 
+-- Disable kitty keyboard protocol (fixes issues with nvim)
+config.enable_kitty_keyboard = true
+
 -- Cursor
 config.default_cursor_style = "BlinkingBar"
 config.cursor_blink_rate = 500
@@ -127,6 +130,10 @@ config.keys = {
   { key = "7", mods = mod, action = act.ActivateTab(6) },
   { key = "8", mods = mod, action = act.ActivateTab(7) },
   { key = "9", mods = mod, action = act.ActivateTab(8) },
+
+  -- Word navigation (Option+Arrow on macOS)
+  { key = "LeftArrow", mods = "OPT", action = act.SendString("\x1bb") },
+  { key = "RightArrow", mods = "OPT", action = act.SendString("\x1bf") },
 }
 
 -- Windows-only keybindings (Cmd equivalents already exist by default on macOS)
