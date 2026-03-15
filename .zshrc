@@ -1,3 +1,6 @@
+# No bell from zsh (tab completion, history nav). External programs still trigger bell.
+setopt NO_BEEP
+
 # Prompt: bold cyan username, bold blue cwd
 PROMPT='%B%F{cyan}%n%f%b:%B%F{blue}%~%f%b$ '
 
