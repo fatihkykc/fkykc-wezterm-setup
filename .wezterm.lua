@@ -132,6 +132,9 @@ config.keys = {
 
 
 
+  -- Swap/move panes
+  { key = "m", mods = mod_shift, action = act.PaneSelect({ mode = "SwapWithActive" }) },
+
   -- Navigate between panes
   { key = "LeftArrow", mods = mod, action = act.ActivatePaneDirection("Left") },
   { key = "RightArrow", mods = mod, action = act.ActivatePaneDirection("Right") },
