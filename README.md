@@ -28,6 +28,7 @@ ln -sf $(pwd)/nvim ~/.config/nvim
 | `Mod+w` | Close pane |
 | `Mod+Enter` | Toggle fullscreen |
 | `Mod+Shift+Space` | Quick select (URLs, paths, hashes) |
+| `Mod+G` | Open lazygit in bottom pane |
 | `Mod+1-9` | Switch to tab |
 | `Option+Left/Right` | Jump word (macOS) |
 

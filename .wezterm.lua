@@ -167,6 +167,17 @@ config.keys = {
   { key = "8", mods = mod, action = act.ActivateTab(7) },
   { key = "9", mods = mod, action = act.ActivateTab(8) },
 
+  -- Lazygit (opens in a new bottom pane)
+  {
+    key = "g",
+    mods = mod,
+    action = act.SplitPane({
+      direction = "Down",
+      size = { Percent = 70 },
+      command = { args = { "/opt/homebrew/bin/lazygit" } },
+    }),
+  },
+
   -- Word navigation (Option+Arrow on macOS)
   { key = "LeftArrow", mods = "OPT", action = act.SendString("\x1bb") },
   { key = "RightArrow", mods = "OPT", action = act.SendString("\x1bf") },
