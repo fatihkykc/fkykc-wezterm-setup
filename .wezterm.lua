@@ -89,6 +89,12 @@ wezterm.on("update-right-status", function(window, pane)
   end
 end)
 
+-- Pane separation: dim inactive panes for clear visual boundary
+config.inactive_pane_hsb = {
+  saturation = 0.8,
+  brightness = 0.6,
+}
+
 -- Disable kitty keyboard protocol (fixes issues with nvim)
 config.enable_kitty_keyboard = true
 

@@ -1,4 +1,32 @@
 {
+  "hooks": {
+    "PermissionRequest": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '\\a' > /dev/tty"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '\\a' > /dev/tty"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash /Users/fatihkiyikci/.claude/statusline-command.sh"
+  },
   "enabledPlugins": {
     "superpowers@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
@@ -16,29 +44,6 @@
       }
     }
   },
-  "skipDangerousModePermissionPrompt": true,
-  "hooks": {
-    "PermissionRequest": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "printf '\\a' > /dev/tty"
-          }
-        ]
-      }
-    ],
-"Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "printf '\\a' > /dev/tty"
-          }
-        ]
-      }
-    ]
-  }
+  "effortLevel": "high",
+  "skipDangerousModePermissionPrompt": true
 }
