@@ -1,4 +1,29 @@
 {
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "allow": [
+      "Bash(gh pr:*)",
+      "Bash(ls:*)",
+      "Bash(ruff check:*)",
+      "Bash(python3:*)",
+      "Bash(git add:*)",
+      "Bash(cd:*)",
+      "Bash(source:*)",
+      "Bash(which ruff:*)",
+      "Bash(pip3 install:*)",
+      "Bash(/Users/fatihkiyikci/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.2/scripts/start-server.sh --project-dir /Users/fatihkiyikci/Documents/GitHub/idp_genai_repo)",
+      "Bash(bash /Users/fatihkiyikci/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.2/skills/brainstorming/scripts/start-server.sh --project-dir /Users/fatihkiyikci/Documents/GitHub/idp_genai_repo)",
+      "Bash(tree:*)",
+      "Bash(wc:*)",
+      "Bash(chmod:*)",
+      "Bash(./remote.sh run:*)",
+      "Bash(git commit:*)"
+    ],
+    "defaultMode": "default"
+  },
   "hooks": {
     "PermissionRequest": [
       {
@@ -34,7 +59,7 @@
     "code-simplifier@claude-plugins-official": true,
     "ralph-loop@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
-    "double-shot-latte@superpowers-marketplace": true
+    "double-shot-latte@superpowers-marketplace": false
   },
   "extraKnownMarketplaces": {
     "superpowers-marketplace": {
@@ -44,6 +69,6 @@
       }
     }
   },
-  "effortLevel": "high",
+  "effortLevel": "medium",
   "skipDangerousModePermissionPrompt": true
 }
