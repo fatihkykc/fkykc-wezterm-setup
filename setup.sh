@@ -32,6 +32,7 @@ link "$REPO_DIR/nvim" "$HOME/.config/nvim"
 
 # Claude Code settings
 link "$REPO_DIR/claude/settings.json" "$HOME/.claude/settings.json"
+link "$REPO_DIR/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
 
 echo ""
 echo "All configs linked. Changes in either direction stay in sync."
