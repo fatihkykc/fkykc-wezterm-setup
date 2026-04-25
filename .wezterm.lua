@@ -96,10 +96,9 @@ config.inactive_pane_hsb = {
   brightness = 0.6,
 }
 
--- Disable kitty keyboard protocol. The richer encoding it sends for Ctrl+Arrow,
--- modified keys, and some <CR>/<Tab> combos confuses nvim and breaks plain
--- shell word-navigation bindings. Stick to the standard CSI sequences.
-config.enable_kitty_keyboard = false
+-- Kitty keyboard protocol: required for terminals to distinguish Shift+Enter
+-- from Enter, etc. Nvim 0.11+ handles this correctly.
+config.enable_kitty_keyboard = true
 
 -- Bell: audible + visual flash
 config.audible_bell = "SystemBeep"
@@ -165,6 +164,7 @@ config.keys = {
 
   -- Fullscreen toggle
   { key = "Enter", mods = mod, action = act.ToggleFullScreen },
+
 
   -- Quick select (URLs, paths, hashes)
   { key = " ", mods = mod_shift, action = act.QuickSelect },
