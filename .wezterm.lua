@@ -75,9 +75,10 @@ wezterm.on("update-right-status", function(window, pane)
     return
   end
   local cwd = cwd_uri.file_path
-  local success, stdout, stderr = wezterm.run_child_process({
-    "git", "-C", cwd, "rev-parse", "--abbrev-ref", "HEAD",
-  })
+  local git_cmd = is_mac
+    and { "git", "-C", cwd, "rev-parse", "--abbrev-ref", "HEAD" }
+    or { "wsl.exe", "-d", "Ubuntu-22.04", "git", "-C", cwd, "rev-parse", "--abbrev-ref", "HEAD" }
+  local success, stdout, stderr = wezterm.run_child_process(git_cmd)
   if success then
     local branch = stdout:gsub("%s+", "")
     window:set_right_status(wezterm.format({
@@ -95,8 +96,10 @@ config.inactive_pane_hsb = {
   brightness = 0.6,
 }
 
--- Disable kitty keyboard protocol (fixes issues with nvim)
-config.enable_kitty_keyboard = true
+-- Disable kitty keyboard protocol. The richer encoding it sends for Ctrl+Arrow,
+-- modified keys, and some <CR>/<Tab> combos confuses nvim and breaks plain
+-- shell word-navigation bindings. Stick to the standard CSI sequences.
+config.enable_kitty_keyboard = false
 
 -- Bell: audible + visual flash
 config.audible_bell = "SystemBeep"
@@ -156,6 +159,10 @@ config.keys = {
   -- Close pane
   { key = "w", mods = mod, action = act.CloseCurrentPane({ confirm = true }) },
 
+  -- Copy / paste (Cmd on mac, Alt on windows/linux)
+  { key = "c", mods = mod, action = act.CopyTo("Clipboard") },
+  { key = "v", mods = mod, action = act.PasteFrom("Clipboard") },
+
   -- Fullscreen toggle
   { key = "Enter", mods = mod, action = act.ToggleFullScreen },
 
@@ -173,21 +180,26 @@ config.keys = {
   { key = "8", mods = mod, action = act.ActivateTab(7) },
   { key = "9", mods = mod, action = act.ActivateTab(8) },
 
-  -- Lazygit (opens in a new bottom pane)
+  -- Lazygit (opens in a new bottom pane). Rely on PATH so the same binding
+  -- works on macOS (homebrew) and WSL (apt/binary install).
   {
     key = "g",
     mods = mod,
     action = act.SplitPane({
       direction = "Down",
       size = { Percent = 70 },
-      command = { args = { "/opt/homebrew/bin/lazygit" } },
+      command = { args = { "lazygit" } },
     }),
   },
 
-  -- Word navigation (Option+Arrow on macOS)
-  { key = "LeftArrow", mods = "OPT", action = act.SendString("\x1bb") },
-  { key = "RightArrow", mods = "OPT", action = act.SendString("\x1bf") },
 }
+
+-- macOS-only: Option+Arrow = word navigation. On non-mac, OPT aliases ALT and
+-- would clobber the ALT+Arrow pane-navigation bindings above.
+if is_mac then
+  table.insert(config.keys, { key = "LeftArrow", mods = "OPT", action = act.SendString("\x1bb") })
+  table.insert(config.keys, { key = "RightArrow", mods = "OPT", action = act.SendString("\x1bf") })
+end
 
 -- Windows-only keybindings (Cmd equivalents already exist by default on macOS)
 if not is_mac then

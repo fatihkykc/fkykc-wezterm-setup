@@ -14,8 +14,6 @@
       "Bash(source:*)",
       "Bash(which ruff:*)",
       "Bash(pip3 install:*)",
-      "Bash(/Users/fatihkiyikci/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.2/scripts/start-server.sh --project-dir /Users/fatihkiyikci/Documents/GitHub/idp_genai_repo)",
-      "Bash(bash /Users/fatihkiyikci/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.2/skills/brainstorming/scripts/start-server.sh --project-dir /Users/fatihkiyikci/Documents/GitHub/idp_genai_repo)",
       "Bash(tree:*)",
       "Bash(wc:*)",
       "Bash(chmod:*)",
@@ -46,11 +44,13 @@
           }
         ]
       }
-    ]
+    ],
+    "PreToolUse": [],
+    "SessionStart": []
   },
   "statusLine": {
     "type": "command",
-    "command": "bash /Users/fatihkiyikci/.claude/statusline-command.sh"
+    "command": "bash \"$HOME/.claude/statusline-command.sh\""
   },
   "enabledPlugins": {
     "superpowers@claude-plugins-official": true,
@@ -59,7 +59,8 @@
     "code-simplifier@claude-plugins-official": true,
     "ralph-loop@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
-    "double-shot-latte@superpowers-marketplace": false
+    "double-shot-latte@superpowers-marketplace": false,
+    "context-mode@context-mode": true
   },
   "extraKnownMarketplaces": {
     "superpowers-marketplace": {
@@ -70,5 +71,6 @@
     }
   },
   "effortLevel": "high",
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "editorMode": "vim"
 }

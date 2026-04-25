@@ -1,0 +1,6 @@
+# Force LF on shell/lua configs so they stay POSIX-runnable on Linux/WSL
+# even when checked out on Windows with core.autocrlf=true.
+*.sh   text eol=lf
+*.lua  text eol=lf
+.zshrc text eol=lf
+.bashrc text eol=lf

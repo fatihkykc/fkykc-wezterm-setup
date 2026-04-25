@@ -24,6 +24,16 @@ link() {
 # Wezterm
 link "$REPO_DIR/.wezterm.lua" "$HOME/.wezterm.lua"
 
+# On WSL, wezterm runs on the Windows side and reads from C:\Users\<user>\.wezterm.lua.
+# Windows can't resolve symlinks pointing into the WSL filesystem, so copy instead.
+if grep -qi microsoft /proc/version 2>/dev/null; then
+  win_user="$(cmd.exe /c 'echo %USERNAME%' 2>/dev/null | tr -d '\r\n')"
+  if [ -n "$win_user" ] && [ -d "/mnt/c/Users/$win_user" ]; then
+    cp "$REPO_DIR/.wezterm.lua" "/mnt/c/Users/$win_user/.wezterm.lua"
+    echo "Copied .wezterm.lua -> /mnt/c/Users/$win_user/.wezterm.lua (re-run setup.sh after edits)"
+  fi
+fi
+
 # Zsh
 link "$REPO_DIR/.zshrc" "$HOME/.zshrc"
 

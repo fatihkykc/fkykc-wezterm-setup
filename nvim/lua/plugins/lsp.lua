@@ -1,17 +1,22 @@
+-- LSP stack pinned to versions that work on Neovim 0.10. The 2.x line of
+-- mason-lspconfig requires `vim.lsp.enable` (0.11+) and will crash at startup
+-- otherwise. Bump nvim to >=0.11 and these pins can be dropped.
 return {
   -- LSP installer
   {
     "williamboman/mason.nvim",
+    version = "^1.0",
     opts = {},
   },
   {
     "williamboman/mason-lspconfig.nvim",
+    version = "^1.0",
     dependencies = { "williamboman/mason.nvim" },
     opts = {
       ensure_installed = { "lua_ls", "ts_ls", "pyright", "ruff" },
     },
   },
-  -- LSP keybindings via autocommand
+  -- LSP keybindings + server setup
   {
     "neovim/nvim-lspconfig",
     dependencies = { "williamboman/mason-lspconfig.nvim" },
@@ -29,12 +34,17 @@ return {
         end,
       })
 
-      -- Configure servers using vim.lsp.config (nvim 0.11+)
-      local servers = { "lua_ls", "ts_ls", "pyright", "ruff" }
-      for _, server in ipairs(servers) do
-        vim.lsp.config(server, {})
-      end
-      vim.lsp.enable(servers)
+      local capabilities = vim.tbl_deep_extend(
+        "force",
+        vim.lsp.protocol.make_client_capabilities(),
+        require("cmp_nvim_lsp").default_capabilities()
+      )
+
+      require("mason-lspconfig").setup_handlers({
+        function(server)
+          require("lspconfig")[server].setup({ capabilities = capabilities })
+        end,
+      })
     end,
   },
   -- Autocomplete

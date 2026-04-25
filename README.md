@@ -1,17 +1,20 @@
 # Dev Environment Config
 
-WezTerm + Neovim + Zsh configuration. Cross-platform (macOS / Windows+WSL).
+WezTerm + Neovim + Zsh + Claude Code. Same dotfiles work on macOS and Windows/WSL Ubuntu.
 
 ## Setup
 
 ```bash
-# Symlink wezterm + zsh
-ln -sf $(pwd)/.wezterm.lua ~/.wezterm.lua
-ln -sf $(pwd)/.zshrc ~/.zshrc
-
-# Symlink nvim config
-ln -sf $(pwd)/nvim ~/.config/nvim
+./setup.sh
 ```
+
+This symlinks `.wezterm.lua`, `.zshrc`, `nvim/`, and the Claude Code config into your home directory (existing files are backed up to `*.bak`). On WSL it also copies `.wezterm.lua` to `C:\Users\<you>\` because WezTerm runs on the Windows side and can't follow symlinks into the WSL filesystem — re-run `setup.sh` after editing `.wezterm.lua`.
+
+## Troubleshooting
+
+- **Tab-completion beeps in zsh** — both `NO_BEEP` (line editor) and `LIST_BEEP` (completion) need to be off. Both are set in `.zshrc`.
+- **Neovim startup errors mentioning treesitter** — `nvim-treesitter` is pinned to the `master` branch in `nvim/lua/plugins/treesitter.lua`. If lazy.nvim has it on `main`, run `:Lazy sync` once to refresh.
+- **Ctrl+Arrow doesn't jump words** — `.zshrc` binds `\e[1;5C/D` (and the Alt variants) to `forward-word`/`backward-word`. If it stops working, check `enable_kitty_keyboard` in `.wezterm.lua` (must be `false`).
 
 ## Shortcuts
 
