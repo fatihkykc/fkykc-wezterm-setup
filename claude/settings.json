@@ -22,7 +22,11 @@
     ],
     "defaultMode": "default"
   },
+<<<<<<< Updated upstream
   "model": "sonnet",
+=======
+  "model": "claude-opus-4-6[1m]",
+>>>>>>> Stashed changes
   "hooks": {
     "PermissionRequest": [
       {
